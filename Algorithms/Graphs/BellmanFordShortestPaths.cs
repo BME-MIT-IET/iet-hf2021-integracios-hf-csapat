@@ -229,7 +229,7 @@ namespace Algorithms.Graphs
         public bool HasPathTo(TVertex destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
-                throw new Exception("Graph doesn't have the specified vertex.");
+                throw new ArgumentException("Graph doesn't have the specified vertex.");
 
             int index = _nodesToIndices[destination];
             return _distances[index] != Infinity;
@@ -241,7 +241,7 @@ namespace Algorithms.Graphs
         public long DistanceTo(TVertex destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
-                throw new Exception("Graph doesn't have the specified vertex.");
+                throw new ArgumentException("Graph doesn't have the specified vertex.");
 
             int index = _nodesToIndices[destination];
             return _distances[index];
@@ -253,7 +253,7 @@ namespace Algorithms.Graphs
         public IEnumerable<TVertex> ShortestPathTo(TVertex destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
-                throw new Exception("Graph doesn't have the specified vertex.");
+                throw new ArgumentException("Graph doesn't have the specified vertex.");
             if (!HasPathTo(destination))
                 return null;
 
