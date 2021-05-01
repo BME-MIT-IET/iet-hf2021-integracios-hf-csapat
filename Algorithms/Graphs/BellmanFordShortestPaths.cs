@@ -127,7 +127,7 @@ namespace Algorithms.Graphs
 
             _distances = new Int64[_verticesCount];
             _predecessors = new int[_verticesCount];
-            _edgeTo = new WeightedEdge<TVertex>[_edgesCount];
+            _edgeTo = new WeightedEdge<TVertex>[_verticesCount];
 
             _nodesToIndices = new Dictionary<TVertex, int>();
             _indicesToNodes = new Dictionary<int, TVertex>();
