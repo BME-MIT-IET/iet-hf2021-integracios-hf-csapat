@@ -6,34 +6,63 @@ using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
-    public class GraphsDijkstraShortestPathsTest
+    public enum ShortestPathAlgorithm
     {
-        [Fact]
-        public void Constructor_Throw_WhenGraphInNull()
+        DIJKSTRA,
+        BELLMAN_FORD,
+        BREADTH_FIRST,
+    }
+
+    public class ShortestPathsTest
+    {
+        private static IShortestPath<string> CreateAlgorithm(ShortestPathAlgorithm algEnum, DirectedWeightedSparseGraph<string> Graph, string Source)
         {
-            Assert.Throws<ArgumentNullException>(() => new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(null, "vertex"));
+            switch (algEnum)
+            {
+                case ShortestPathAlgorithm.DIJKSTRA: return new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(Graph, Source);
+                case ShortestPathAlgorithm.BELLMAN_FORD: return new BellmanFordShortestPaths<DirectedWeightedSparseGraph<string>, string>(Graph, Source);
+                case ShortestPathAlgorithm.BREADTH_FIRST: return new BreadthFirstShortestPaths<string>(Graph, Source);
+            }
+            throw new ArgumentException("unkown algorithm: " + algEnum);
         }
 
-        [Fact]
-        public void Constructor_Throw_WhenSourceVertexIsNull()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void Constructor_Throw_WhenGraphInNull(ShortestPathAlgorithm alg)
+        {
+            Assert.Throws<ArgumentNullException>(() => CreateAlgorithm(alg, null, "vertex"));
+        }
+
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void Constructor_Throw_WhenSourceVertexIsNull(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
-            Assert.Throws<ArgumentNullException>(() => new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, null));
+            Assert.Throws<ArgumentNullException>(() => CreateAlgorithm(alg, graph, null));
         }
 
-        [Fact]
-        public void Constructor_Throw_WhenSourceIsNotPartOfGraph()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void Constructor_Throw_WhenSourceIsNotPartOfGraph(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
             graph.AddVertex("b");
             graph.AddVertex("c");
             graph.AddVertex("d");
-            Assert.Throws<ArgumentException>(() => new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "x"));
+            Assert.Throws<ArgumentException>(() => CreateAlgorithm(alg, graph, "x"));
         }
 
-        [Fact]
-        public void Constructor_Throw_WhenAnyEdgeWeightIsLessThanZero()
+        // Only running with DIJKSTRA, as it is the only one allowing negative edges
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        public void Constructor_Throw_WhenAnyEdgeWeightIsLessThanZeroShortestPathAlgorithm(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -41,11 +70,14 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", -1);
 
-            Assert.Throws<ArgumentException>(() => new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a"));
+            Assert.Throws<ArgumentException>(() => CreateAlgorithm(alg, graph, "a"));
         }
 
-        [Fact]
-        public void ShortestPathTo_Throw_WhenDestinationIsNotInGraph()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void ShortestPathTo_Throw_WhenDestinationIsNotInGraph(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -53,12 +85,15 @@ namespace UnitTest.AlgorithmsTests
             graph.AddVertex("c");
             graph.AddVertex("d");
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             Assert.Throws<ArgumentException>(() => dijkstra.ShortestPathTo("z"));
         }
 
-        [Fact]
-        public void ShortestPathTo_ReturnNull_WhenDestinationIsNotAchievable()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void ShortestPathTo_ReturnNull_WhenDestinationIsNotAchievable(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -70,12 +105,15 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("b", "c", 1);
             graph.AddEdge("c", "a", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             Assert.Null(dijkstra.ShortestPathTo("d"));
         }
 
-        [Fact]
-        public void ShortestPathTo_ReturnSingleVertex_WhenDestinationIsSameAsSource()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void ShortestPathTo_ReturnSingleVertex_WhenDestinationIsSameAsSource(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -87,15 +125,18 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("b", "c", 1);
             graph.AddEdge("c", "a", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             var result = dijkstra.ShortestPathTo("a");
             Assert.NotNull(result);
             Assert.Single(result);
             Assert.Equal("a", result.Single());
         }
 
-        [Fact]
-        public void ShortestPathTo_FindShortestPath_WhenThereIsOnlyOnePath()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void ShortestPathTo_FindShortestPath_WhenThereIsOnlyOnePath(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -108,7 +149,7 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("a", "c", 1);
             graph.AddEdge("c", "d", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             var result = dijkstra.ShortestPathTo("d");
             Assert.NotNull(result);
             Assert.Equal(3, result.Count());
@@ -118,8 +159,11 @@ namespace UnitTest.AlgorithmsTests
             Assert.Equal(2, dijkstra.DistanceTo("d"));
         }
 
-        [Fact]
-        public void ShortestPathTo_FindShortestPath_WhenThereIsPossibleMultiplePaths()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void ShortestPathTo_FindShortestPath_WhenThereIsPossibleMultiplePaths(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -133,7 +177,7 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("c", "d", 1);
             graph.AddEdge("b", "d", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             var result = dijkstra.ShortestPathTo("d");
             Assert.NotNull(result);
             Assert.Equal(3, result.Count());
@@ -143,8 +187,11 @@ namespace UnitTest.AlgorithmsTests
             Assert.Equal(2, dijkstra.DistanceTo("d"));
         }
 
-        [Fact]
-        public void ShortestPathTo_FindShortestPath_WhenEdgeHaveDifferentWeight()
+        // Not running with BREADTH_FIRST, it does not support weights
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        public void ShortestPathTo_FindShortestPath_WhenEdgeHaveDifferentWeight(ShortestPathAlgorithm alg)
         {
             var vertices = new[] { "r", "s", "t", "x", "y", "z" };
             var graph = new DirectedWeightedSparseGraph<string>();
@@ -161,7 +208,7 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("x", "z", 4);
             graph.AddEdge("y", "z", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "s");
+            var dijkstra = CreateAlgorithm(alg, graph, "s");
             var shortestToZ = dijkstra.ShortestPathTo("z");
             Assert.NotNull(shortestToZ);
             Assert.Equal(3, shortestToZ.Count());
@@ -179,8 +226,11 @@ namespace UnitTest.AlgorithmsTests
             Assert.Equal(11, dijkstra.DistanceTo("y"));
         }
 
-        [Fact]
-        public void HasPathTo_Throw_WhenVertexIsNotInGraph()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void HasPathTo_Throw_WhenVertexIsNotInGraph(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -189,12 +239,15 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             Assert.Throws<ArgumentException>(() => dijkstra.HasPathTo("z"));
         }
 
-        [Fact]
-        public void HasPathTo_ReturnTrue_WhenVertexIsAchievable()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void HasPathTo_ReturnTrue_WhenVertexIsAchievable(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -203,12 +256,15 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             Assert.True(dijkstra.HasPathTo("b"));
         }
 
-        [Fact]
-        public void HasPathTo_ReturnFalse_WhenVertexIsNotAchievable()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void HasPathTo_ReturnFalse_WhenVertexIsNotAchievable(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -217,12 +273,15 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             Assert.False(dijkstra.HasPathTo("c"));
         }
 
-        [Fact]
-        public void DistanceTo_Throw_WhenVertexIsNotInGraph()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void DistanceTo_Throw_WhenVertexIsNotInGraph(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -231,12 +290,15 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             Assert.Throws<ArgumentException>(() => dijkstra.DistanceTo("z"));
         }
 
-        [Fact]
-        public void DistanceTo_ReturnInfinity_WhenVertexIsNotAchievable()
+        [Theory]
+        [InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+        [InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+        [InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+        public void DistanceTo_ReturnInfinity_WhenVertexIsNotAchievable(ShortestPathAlgorithm alg)
         {
             var graph = new DirectedWeightedSparseGraph<string>();
             graph.AddVertex("a");
@@ -245,7 +307,7 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var dijkstra = CreateAlgorithm(alg, graph, "a");
             Assert.Equal(long.MaxValue, dijkstra.DistanceTo("c"));
         }
     }
