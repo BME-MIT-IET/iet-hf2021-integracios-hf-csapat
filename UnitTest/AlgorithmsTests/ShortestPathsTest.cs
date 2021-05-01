@@ -85,8 +85,8 @@ namespace UnitTest.AlgorithmsTests
             graph.AddVertex("c");
             graph.AddVertex("d");
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            Assert.Throws<ArgumentException>(() => dijkstra.ShortestPathTo("z"));
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            Assert.Throws<ArgumentException>(() => algorithm.ShortestPathTo("z"));
         }
 
         [Theory]
@@ -105,8 +105,8 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("b", "c", 1);
             graph.AddEdge("c", "a", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            Assert.Null(dijkstra.ShortestPathTo("d"));
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            Assert.Null(algorithm.ShortestPathTo("d"));
         }
 
         [Theory]
@@ -125,8 +125,8 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("b", "c", 1);
             graph.AddEdge("c", "a", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            var result = dijkstra.ShortestPathTo("a");
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            var result = algorithm.ShortestPathTo("a");
             Assert.NotNull(result);
             Assert.Single(result);
             Assert.Equal("a", result.Single());
@@ -149,14 +149,14 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("a", "c", 1);
             graph.AddEdge("c", "d", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            var result = dijkstra.ShortestPathTo("d");
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            var result = algorithm.ShortestPathTo("d");
             Assert.NotNull(result);
             Assert.Equal(3, result.Count());
             Assert.Contains("a", result);
             Assert.Contains("c", result);
             Assert.Contains("d", result);
-            Assert.Equal(2, dijkstra.DistanceTo("d"));
+            Assert.Equal(2, algorithm.DistanceTo("d"));
         }
 
         [Theory]
@@ -177,14 +177,14 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("c", "d", 1);
             graph.AddEdge("b", "d", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            var result = dijkstra.ShortestPathTo("d");
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            var result = algorithm.ShortestPathTo("d");
             Assert.NotNull(result);
             Assert.Equal(3, result.Count());
             Assert.Contains("a", result);
             Assert.Contains("b", result);
             Assert.Contains("d", result);
-            Assert.Equal(2, dijkstra.DistanceTo("d"));
+            Assert.Equal(2, algorithm.DistanceTo("d"));
         }
 
         // Not running with BREADTH_FIRST, it does not support weights
@@ -208,22 +208,22 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("x", "z", 4);
             graph.AddEdge("y", "z", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "s");
-            var shortestToZ = dijkstra.ShortestPathTo("z");
+            var algorithm = CreateAlgorithm(alg, graph, "s");
+            var shortestToZ = algorithm.ShortestPathTo("z");
             Assert.NotNull(shortestToZ);
             Assert.Equal(3, shortestToZ.Count());
             Assert.Contains("s", shortestToZ);
             Assert.Contains("t", shortestToZ);
             Assert.Contains("z", shortestToZ);
-            Assert.Equal(10, dijkstra.DistanceTo("z"));
+            Assert.Equal(10, algorithm.DistanceTo("z"));
 
-            var shortestToY = dijkstra.ShortestPathTo("y");
+            var shortestToY = algorithm.ShortestPathTo("y");
             Assert.NotNull(shortestToY);
             Assert.Equal(3, shortestToY.Count());
             Assert.Contains("s", shortestToY);
             Assert.Contains("x", shortestToY);
             Assert.Contains("y", shortestToY);
-            Assert.Equal(11, dijkstra.DistanceTo("y"));
+            Assert.Equal(11, algorithm.DistanceTo("y"));
         }
 
         [Theory]
@@ -239,8 +239,8 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            Assert.Throws<ArgumentException>(() => dijkstra.HasPathTo("z"));
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            Assert.Throws<ArgumentException>(() => algorithm.HasPathTo("z"));
         }
 
         [Theory]
@@ -256,8 +256,8 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            Assert.True(dijkstra.HasPathTo("b"));
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            Assert.True(algorithm.HasPathTo("b"));
         }
 
         [Theory]
@@ -273,8 +273,8 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            Assert.False(dijkstra.HasPathTo("c"));
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            Assert.False(algorithm.HasPathTo("c"));
         }
 
         [Theory]
@@ -290,8 +290,8 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            Assert.Throws<ArgumentException>(() => dijkstra.DistanceTo("z"));
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            Assert.Throws<ArgumentException>(() => algorithm.DistanceTo("z"));
         }
 
         [Theory]
@@ -307,8 +307,8 @@ namespace UnitTest.AlgorithmsTests
 
             graph.AddEdge("a", "b", 1);
 
-            var dijkstra = CreateAlgorithm(alg, graph, "a");
-            Assert.Equal(long.MaxValue, dijkstra.DistanceTo("c"));
+            var algorithm = CreateAlgorithm(alg, graph, "a");
+            Assert.Equal(long.MaxValue, algorithm.DistanceTo("c"));
         }
     }
 }
