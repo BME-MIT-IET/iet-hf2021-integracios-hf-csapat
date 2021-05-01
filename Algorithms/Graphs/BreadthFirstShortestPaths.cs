@@ -12,7 +12,8 @@ using DataStructures.Graphs;
 
 namespace Algorithms.Graphs
 {
-    public class BreadthFirstShortestPaths<T> where T : IComparable<T>
+    public class BreadthFirstShortestPaths<T> : IShortestPath<T>
+        where T : IComparable<T>
     {
         private int _edgesCount { get; set; }
         private int _verticesCount { get; set; }

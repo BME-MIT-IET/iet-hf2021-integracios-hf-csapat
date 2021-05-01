@@ -6,7 +6,7 @@ using DataStructures.Graphs;
 
 namespace Algorithms.Graphs
 {
-    public class BellmanFordShortestPaths<TGraph, TVertex>
+    public class BellmanFordShortestPaths<TGraph, TVertex> : IShortestPath<TVertex>
         where TGraph : IGraph<TVertex>, IWeightedGraph<TVertex>
         where TVertex : IComparable<TVertex>
     {
