@@ -12,14 +12,12 @@ namespace UnitTest.DataStructuresTests
         [Fact]
         public static void CheckHashIdenticalInt()
         {
-            PrimeHashingFamily hash1 = new PrimeHashingFamily(1);
-            PrimeHashingFamily hash2 = new PrimeHashingFamily(1);
+            PrimeHashingFamily hash1 = new PrimeHashingFamily(5);
+            PrimeHashingFamily hash2 = new PrimeHashingFamily(5);
             int hashValue = "főzelék".GetHashCode();
 
             for (int i = 1; i < hash1.NumberOfFunctions; i++)
             {
-                hash1 = new PrimeHashingFamily(i);
-                hash2 = new PrimeHashingFamily(i);
                 int result1 = hash1.Hash(hashValue, i);
                 int result2 = hash2.Hash(hashValue, i);
                 Assert.Equal(result1, result2);
@@ -54,8 +52,6 @@ namespace UnitTest.DataStructuresTests
 
             for (int i = 1; i < hash1.NumberOfFunctions; i++)
             {
-                hash1 = new PrimeHashingFamily(i);
-                hash2 = new PrimeHashingFamily(i);
                 int result1 = hash1.Hash(hashValue, i);
                 int result2 = hash2.Hash(hashValue, i);
                 Assert.Equal(result1, result2);
