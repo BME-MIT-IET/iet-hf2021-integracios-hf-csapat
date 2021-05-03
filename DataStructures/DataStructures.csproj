@@ -8,8 +8,4 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeCoverage" Version="16.9.4" />
-  </ItemGroup>
 </Project>

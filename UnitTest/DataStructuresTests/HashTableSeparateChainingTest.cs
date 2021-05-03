@@ -37,7 +37,7 @@ namespace UnitTest.DataStructuresTests
             studentsMarks.Add("Name2", 5);
 
             Action act = () => studentsMarks.Add("Name2", 7);
-
+            
             var exception = Assert.Throws<ArgumentException>(act);
             Assert.Equal("Key already exists in the hash table.", exception.Message);
             Assert.True(studentsMarks.Count == 2);
