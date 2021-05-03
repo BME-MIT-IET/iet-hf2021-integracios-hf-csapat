@@ -27,7 +27,7 @@ namespace DataStructures.Hashing
         public PrimeHashingFamily(int numberOfHashFunctions)
         {
             if (numberOfHashFunctions <= 0)
-                throw new ArgumentOutOfRangeException("Number of hash functions should be greater than zero.");
+                throw new ArgumentOutOfRangeException($"Number of hash functions should be greater than zero.");
 
             _randomizer = new Random();
             _numberOfHashFunctions = numberOfHashFunctions;
@@ -68,11 +68,11 @@ namespace DataStructures.Hashing
         public int Hash(int preHashedKey, int whichHashFunction)
         {
             if (whichHashFunction <= 0 || whichHashFunction > _numberOfHashFunctions)
-                throw new ArgumentOutOfRangeException("WhichHashFunction parameter should be greater than zero or equal to the number of Hash Functions.");
+                throw new ArgumentOutOfRangeException($"WhichHashFunction parameter should be greater than zero or equal to the number of Hash Functions.");
 
             int preHashValue = 0;
             int multiplier = _multipliersVector[whichHashFunction - 1];
-            var characters = preHashedKey.ToString().ToCharArray();
+            _ = preHashedKey.ToString().ToCharArray();
 
             return (multiplier * preHashValue);
         }

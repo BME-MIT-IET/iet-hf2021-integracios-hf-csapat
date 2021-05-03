@@ -14,17 +14,20 @@ namespace DataStructures.Heaps
         /// <summary>
         /// The Heap Node class.
         /// </summary>
-        private class BinomialNode<T> where T : IComparable<T>
+        private class BinomialNode<V> where V : IComparable<T>
         {
-            public T Value { get; set; }
-            public BinomialNode<T> Parent { get; set; }
-            public BinomialNode<T> Sibling { get; set; }    // Right-Sibling
-            public BinomialNode<T> Child { get; set; }      // Left-Child
+            public V Value { get; set; }
+            public BinomialNode<V> Parent { get; set; }
+            public BinomialNode<V> Sibling { get; set; }    // Right-Sibling
+            public BinomialNode<V> Child { get; set; }      // Left-Child
+
+
+
 
             // Constructors
-            public BinomialNode() : this(default(T), null, null, null) { }
-            public BinomialNode(T value) : this(value, null, null, null) { }
-            public BinomialNode(T value, BinomialNode<T> parent, BinomialNode<T> sibling, BinomialNode<T> child)
+            public BinomialNode() : this(default(V), null, null, null) { }
+            public BinomialNode(V value) : this(value, null, null, null) { }
+            public BinomialNode(V value, BinomialNode<V> parent, BinomialNode<V> sibling, BinomialNode<V> child)
             {
                 Value = value;
                 Parent = parent;
@@ -64,15 +67,15 @@ namespace DataStructures.Heaps
 
         public BinomialMinHeap(int capacity)
         {
-            if (capacity <= 0)
-                throw new ArgumentOutOfRangeException();
+
+            CheckCapacity(capacity);
 
             capacity = (capacity < _defaultCapacity ? _defaultCapacity : capacity);
 
             _size = 0;
             _forest = new ArrayList<BinomialNode<T>>(capacity);
         }
-
+       
 
         /************************************************************************************************/
         /** PRIVATE HELPER FUNCTIONS                                                                    */
@@ -113,6 +116,13 @@ namespace DataStructures.Heaps
             --_size;
         }
 
+        private void CheckCapacity(int capacity)
+        {
+            string message = $"Capacity is negative: {capacity}";
+            if (capacity <= 0)
+                throw new ArgumentOutOfRangeException(message);
+        }
+
         /// <summary>
         /// Returns index of the tree with the minimum root's value.
         /// </summary>
@@ -138,7 +148,7 @@ namespace DataStructures.Heaps
         private BinomialNode<T> _combineTrees(BinomialNode<T> firstTreeRoot, BinomialNode<T> secondTreeRoot)
         {
             if (firstTreeRoot == null || secondTreeRoot == null)
-                throw new ArgumentNullException("Either one of the nodes or both are null.");
+                throw new ArgumentNullException($"Either one of the nodes or both are null. FirstTree: {firstTreeRoot} SecondTree: {secondTreeRoot}");
 
             if (secondTreeRoot.Value.IsLessThan(firstTreeRoot.Value))
                 return _combineTrees(secondTreeRoot, firstTreeRoot);
@@ -182,13 +192,14 @@ namespace DataStructures.Heaps
             get { return (_size == 0); }
         }
 
+
         /// <summary>
         /// Initializes this heap with a collection of elements.
         /// </summary>
         public void Initialize(IList<T> newCollection)
         {
             if (newCollection == null)
-                throw new ArgumentNullException();
+                throw new ArgumentNullException($"The provided parameter was null");
 
             if (newCollection.Count > ArrayList<T>.MAXIMUM_ARRAY_LENGTH_x64)
                 throw new OverflowException();
@@ -221,7 +232,7 @@ namespace DataStructures.Heaps
         public T Peek()
         {
             if (IsEmpty)
-                throw new Exception("Heap is empty.");
+                throw new ArgumentNullException($"Heap is empty.");
 
             int minIndex = _findMinIndex();
             var minValue = _forest[minIndex].Value;
@@ -235,7 +246,7 @@ namespace DataStructures.Heaps
         public void RemoveMin()
         {
             if (IsEmpty)
-                throw new Exception("Heap is empty.");
+                throw new ArgumentNullException($"Heap is empty.");
 
             _removeAtIndex(_findMinIndex());
         }
@@ -246,7 +257,7 @@ namespace DataStructures.Heaps
         public T ExtractMin()
         {
             if (IsEmpty)
-                throw new Exception("Heap is empty.");
+                throw new ArgumentNullException($"Heap is empty.");
 
             // Get the min-node index
             int minIndex = _findMinIndex();
@@ -283,7 +294,7 @@ namespace DataStructures.Heaps
 
             for (int i = 0, j = 1; j <= _size; i++, j *= 2)
             {
-                BinomialNode<T> treeRoot1 = (_forest.IsEmpty == true ? null : _forest[i]);
+                BinomialNode<T> treeRoot1 = (_forest.IsEmpty ? null : _forest[i]);
                 BinomialNode<T> treeRoot2 = (i < otherHeap._forest.Count ? otherHeap._forest[i] : null);
 
                 int whichCase = (treeRoot1 == null ? 0 : 1);

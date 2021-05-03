@@ -13,14 +13,14 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// Hash Table Cell.
         /// </summary>
-        private class HashTableEntry<TKey, TValue> where TKey : IComparable<TKey>
+        private class HashTableEntry<TKeyinternal, TValueinternal> where TKeyinternal : IComparable<TKey>
         {
-            public TKey Key { get; set; }
-            public TValue Value { get; set; }
+            public TKeyinternal Key { get; set; }
+            public TValueinternal Value { get; set; }
             public EntryStatus Status { get; set; }
 
-            public HashTableEntry() : this(default(TKey), default(TValue)) { }
-            public HashTableEntry(TKey key, TValue value, EntryStatus status = EntryStatus.Occupied)
+            public HashTableEntry() : this(default(TKeyinternal), default(TValueinternal)) { }
+            public HashTableEntry(TKeyinternal key, TValueinternal value, EntryStatus status = EntryStatus.Occupied)
             {
                 Key = key;
                 Value = value;

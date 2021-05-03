@@ -30,7 +30,7 @@ namespace UnitTest.DataStructuresTests
             graph.AddEdge("v", "f", 1);
             graph.AddEdge("f", "c", 2);
 
-            var allEdges = graph.Edges.ToList();
+            var allEdges = graph.GetEdges().ToList();
 
             Debug.Assert(graph.VerticesCount == 8, "Wrong vertices count.");
             Debug.Assert(graph.EdgesCount == 14, "Wrong edges count.");
