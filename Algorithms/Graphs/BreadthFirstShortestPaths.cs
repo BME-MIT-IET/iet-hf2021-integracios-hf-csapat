@@ -12,7 +12,8 @@ using DataStructures.Graphs;
 
 namespace Algorithms.Graphs
 {
-    public class BreadthFirstShortestPaths<T> where T : IComparable<T>
+    public class BreadthFirstShortestPaths<T> : IShortestPath<T>
+        where T : IComparable<T>
     {
         private int _edgesCount { get; set; }
         private int _verticesCount { get; set; }
@@ -153,7 +154,7 @@ namespace Algorithms.Graphs
             foreach (var source in sources)
             {
                 if (!graph.HasVertex(source))
-                    throw new Exception("Graph doesn't has a vertex '" + source + "'");
+                    throw new ArgumentException("Graph doesn't has a vertex '" + source + "'");
 
                 int index = _nodesToIndices[source];
                 _distances[index] = 0;
@@ -256,7 +257,7 @@ namespace Algorithms.Graphs
         public bool HasPathTo(T destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
-                throw new Exception("Graph doesn't have the specified vertex.");
+                throw new ArgumentException("Graph doesn't have the specified vertex.");
 
             int dstIndex = _nodesToIndices[destination];
             return (_visited[dstIndex]);
@@ -268,7 +269,7 @@ namespace Algorithms.Graphs
         public long DistanceTo(T destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
-                throw new Exception("Graph doesn't have the specified vertex.");
+                throw new ArgumentException("Graph doesn't have the specified vertex.");
 
             int dstIndex = _nodesToIndices[destination];
             return (_distances[dstIndex]);
@@ -280,7 +281,7 @@ namespace Algorithms.Graphs
         public IEnumerable<T> ShortestPathTo(T destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
-                throw new Exception("Graph doesn't have the specified vertex.");
+                throw new ArgumentException("Graph doesn't have the specified vertex.");
             if (!HasPathTo(destination))
                 return null;
 

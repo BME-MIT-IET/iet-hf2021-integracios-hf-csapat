@@ -6,7 +6,7 @@ using DataStructures.Graphs;
 
 namespace Algorithms.Graphs
 {
-    public class BellmanFordShortestPaths<TGraph, TVertex>
+    public class BellmanFordShortestPaths<TGraph, TVertex> : IShortestPath<TVertex>
         where TGraph : IGraph<TVertex>, IWeightedGraph<TVertex>
         where TVertex : IComparable<TVertex>
     {
@@ -127,7 +127,7 @@ namespace Algorithms.Graphs
 
             _distances = new Int64[_verticesCount];
             _predecessors = new int[_verticesCount];
-            _edgeTo = new WeightedEdge<TVertex>[_edgesCount];
+            _edgeTo = new WeightedEdge<TVertex>[_verticesCount];
 
             _nodesToIndices = new Dictionary<TVertex, int>();
             _indicesToNodes = new Dictionary<int, TVertex>();
@@ -187,7 +187,7 @@ namespace Algorithms.Graphs
                 {
                     int w = _nodesToIndices[edge.Key];
 
-                    if (_distances[v] + edge.Value < _distances[w])
+                    if (_distances[v] != Infinity && _distances[v] + edge.Value < _distances[w])
                     {
                         Console.WriteLine("edge " + vertex + "-" + edge.Key + " is not relaxed");
                         return false;
@@ -229,7 +229,7 @@ namespace Algorithms.Graphs
         public bool HasPathTo(TVertex destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
-                throw new Exception("Graph doesn't have the specified vertex.");
+                throw new ArgumentException("Graph doesn't have the specified vertex.");
 
             int index = _nodesToIndices[destination];
             return _distances[index] != Infinity;
@@ -241,7 +241,7 @@ namespace Algorithms.Graphs
         public long DistanceTo(TVertex destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
-                throw new Exception("Graph doesn't have the specified vertex.");
+                throw new ArgumentException("Graph doesn't have the specified vertex.");
 
             int index = _nodesToIndices[destination];
             return _distances[index];
@@ -253,7 +253,7 @@ namespace Algorithms.Graphs
         public IEnumerable<TVertex> ShortestPathTo(TVertex destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
-                throw new Exception("Graph doesn't have the specified vertex.");
+                throw new ArgumentException("Graph doesn't have the specified vertex.");
             if (!HasPathTo(destination))
                 return null;
 

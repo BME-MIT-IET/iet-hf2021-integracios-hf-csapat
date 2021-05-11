@@ -9,7 +9,7 @@ namespace Algorithms.Graphs
     /// <summary>
     ///     Computes Dijkstra's Shortest-Paths for Directed Weighted Graphs from a single-source to all destinations.
     /// </summary>
-    public class DijkstraShortestPaths<TGraph, TVertex>
+    public class DijkstraShortestPaths<TGraph, TVertex> : IShortestPath<TVertex>
         where TGraph : IGraph<TVertex>, IWeightedGraph<TVertex>
         where TVertex : IComparable<TVertex>
     {
