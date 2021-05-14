@@ -37,33 +37,40 @@ The unit tests are the following:
 
 - AddValueToHashTableTest()
 ![](image/AddValueToHashTableTest.PNG)
+
 To make sure the initalization of this class works properly we instantiated this class, and tested the Count property
 
 - HashSearchTest()
 ![](image/HashSearchTest.PNG)
+
 We were testing the search function of the hashTable, that returns the index of the of searched key.
 
 
 - ExpandHashSizeTest()
 ![](image/ExpandHashSizeTest.PNG)
+
 We were initializing the hashTable with the length of two, and added 3 elements to the table to test if the expand feature works properly, so the table does not throw exeption and returns the expected length.
 
 - IndexingHashTest()
 ![](image/IndexingHashTest.PNG)
+
 We were testing the [] indexing operator of the hashTable, if it returns the expected value.
 
 - RemoveTest()
 ![](image/RemoveTest.PNG)
+
 We were testing the Remove() function of the class, by adding an element, removing it using the key, and then checking the length of the hashTable, if it is empty. 
 
 
 - IndexElementExceptionTest()
 ![](image/IndexElementExceptionTest.PNG)
+
 After trying to assign value to a given key, which has not prevously been initialized the program throws a keynotfound exception. 
 
 
 - ClearElementsTest()
 ![](image/ClearElementsTest.PNG)
+
 We were testing the Clear() function of the class by adding several elements to the hashTable, and then clearing it, and checking if it is empty.
 
 
