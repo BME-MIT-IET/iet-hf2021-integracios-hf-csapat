@@ -2,6 +2,8 @@
  With SonarLint we could detect and fix issues during development. The product has thousands of static code analysis rules to help improve the quality of code. With the help of the program We detected common mistakes and fixed those with the suggested solutions.
 
 The error list is visible on the image below:
+
+
  ![](image/SonarErrors.PNG)
 
 
