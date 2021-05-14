@@ -18,15 +18,15 @@ namespace UnitTest.AlgorithmsTests
         public static void SelectionSorterAscendingTest()
         {
             List<Person> allPersons = new List<Person>();
-            for(int i=0; i<100; i++)
+            for (int i = 0; i < 100; i++)
             {
                 Person p = new Person(rnd.Next(20, 40), rnd.Next(1000, 10000), $"person {i}");
                 allPersons.Add(p);
             }
 
-            allPersons.SelectionSort(new Person(0,0,""));
+            allPersons.SelectionSort(new PersonComparer());
 
-            Assert.True(allPersons.SequenceEqual(allPersons.OrderBy(x => x.age*x.salary)), "Wrong ascending order!");
+            Assert.True(allPersons.SequenceEqual(allPersons.OrderBy(x => x.age * x.salary)), "Wrong ascending order!");
         }
 
 
@@ -40,16 +40,16 @@ namespace UnitTest.AlgorithmsTests
                 allPersons.Add(p);
             }
 
-            allPersons.SelectionSortDescending(new Person(0, 0, ""));
+            allPersons.SelectionSortDescending(new PersonComparer());
 
-            Assert.False(allPersons.SequenceEqual(allPersons.OrderBy(x => x.age * x.salary))); 
+            Assert.False(allPersons.SequenceEqual(allPersons.OrderBy(x => x.age * x.salary)));
             Assert.True(allPersons.SequenceEqual(allPersons.OrderByDescending(x => x.age * x.salary)), "Wrong descending order!");
 
         }
     }
 
     //the complex type also impelements the Comparer interface
-    public class Person : Comparer<Person>
+    public class Person
     {
         public readonly int age;
         public readonly int salary;
@@ -61,6 +61,11 @@ namespace UnitTest.AlgorithmsTests
             this.name = name;
             this.salary = salary;
         }
+        
+    }
+
+    public class PersonComparer :  Comparer<Person>
+    {
         public override int Compare(Person x, Person y)
         {
             int xPersonValue = x.age * x.salary;
@@ -70,4 +75,5 @@ namespace UnitTest.AlgorithmsTests
             return xPersonValue - yPersonValue;
         }
     }
+
 }
