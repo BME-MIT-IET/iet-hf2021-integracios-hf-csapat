@@ -71,11 +71,11 @@ namespace BDDTest.Features
         }
         
         [TechTalk.SpecRun.ScenarioAttribute("QuickSorter integer list sorting", new string[] {
-                "sorter"}, SourceLine=5)]
+                "sortAscending"}, SourceLine=5)]
         public virtual void QuickSorterIntegerListSorting()
         {
             string[] tagsOfScenario = new string[] {
-                    "sorter"};
+                    "sortAscending"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("QuickSorter integer list sorting", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 6
@@ -102,7 +102,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("the random seed is 42", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
- testRunner.And("the list is of length 100000", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("a random list of length 100000 is generated", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 9
  testRunner.When("the list is sorted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
