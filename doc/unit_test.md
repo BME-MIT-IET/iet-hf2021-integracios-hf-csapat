@@ -76,21 +76,25 @@ We were testing the Clear() function of the class by adding several elements to 
 
 - ContainsElementTest()
 ![](image/ContainsElementTest.PNG)
+
 We were testing the Contains() function of the class by adding an element to the hashTable, then creating another element with the same properties as the prevous element, and checking if the hashTable contains this element.
 
 
 - TryGetValueTest()
 ![](image/TryGetValueTest.PNG)
+
 We were testing the TryGetValue() function by adding an element to the hashTable, and calling the TryGetValue() function with the key of the added element, and checking if it returned true.
 
 
 - AddElementStringKeyTest()
 ![](image/AddElementStringKeyTest.PNG)
+
 We were adding elements to the hashTable, that have string keys. We were testing if these elements were properly added.
 
 
 - RemoveKeyTest()
 ![](image/RemoveKeyTest.PNG)
+
 We were testing the Remove() function of the class, by adding an element, removing it using the element, and then checking the length of the hashTable, if it is empty. 
 
 
@@ -118,27 +122,32 @@ The unit tests are the following:
 
 - CheckHashIdenticalInt()
 ![](image/CheckHashIdenticalInt.PNG)
+
 We were testing if all the 5 implemented hashing algorithms gives the same deterministic hashed value for the given integer parameter. 
 
 
 - CheckInvalidHashConstruction()
 ![](image/CheckInvalidHashConstruction.PNG)
+
 PrimeHashingFamily can not be initialized with 0 hashing algorithms, and we are expecting it to throw an exception.
 
 
 
 - CheckInvalidHashFunction()
 ![](image/CheckInvalidHashFunction.PNG)
+
 We were testing if using the 0. hashing algorithm throws an expected exception.
 
 
 - CheckHashIdenticalString()
 ![](image/CheckHashIdenticalString.PNG)
+
 We were testing if all the 5 implemented hashing algorithms gives the same deterministic hashed value for the given string parameter. 
 
 
 - CheckInvalidHashFunctionString()
 ![](image/CheckInvalidHashFunctionString.PNG)
+
 We were testing if hashing algorithm throws an expected exception if we are hashing on null.
 
 
