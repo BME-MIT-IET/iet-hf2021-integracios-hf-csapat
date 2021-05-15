@@ -14,7 +14,7 @@ Scenario: GnomeSorter integer list explicit ascending sorting
 	When the list is sorted ascending
 	Then the list should be in ascending order
 
-@sortDescendign
+@sortDescending
 Scenario: GnomeSorter integer list explicit descending sorting
 	Given the random seed is 54872
 	And a random list of length 10000 is generated

@@ -15,7 +15,7 @@ Scenario: CycleSorter integer list explicit ascending sorting
 	When the list is sorted ascending
 	Then the list should be in ascending order
 
-@sortDescendign
+@sortDescending
 Scenario: CycleSorter integer list explicit descending sorting
 	Given the random seed is 13602
 	And a random list of length 10000 is generated
