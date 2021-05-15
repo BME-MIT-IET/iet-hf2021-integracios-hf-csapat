@@ -73,3 +73,5 @@ that implementation, we had to add new keyword.
 - UndirectedWeightedDenseGraph.cs 
 - GraphsDirectedWeightedDenseGraphTest.cs 
 
+
+SonarLint suggested other issues concerning the syntax, but We discarded them, because they were not useful in the given context.
