@@ -10,7 +10,7 @@ namespace BDDTest.Steps
 {
 	[Binding]
 	[Scope(Feature = "OddEvenSorter")]
-	public sealed class OddEvenSorterStepDefinition
+	public sealed class OddEvenSorterStepDefinitions
 	{
 		private readonly ScenarioContext _scenarioContext;
 		private readonly string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -20,7 +20,7 @@ namespace BDDTest.Steps
 		private int _stringLength = 0;
 		private Random _random;
 
-		public OddEvenSorterStepDefinition(ScenarioContext scenarioContext)
+		public OddEvenSorterStepDefinitions(ScenarioContext scenarioContext)
 		{
 			_scenarioContext = scenarioContext;
 		}

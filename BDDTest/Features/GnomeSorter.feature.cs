@@ -159,11 +159,11 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [TechTalk.SpecRun.ScenarioAttribute("GnomeSorter integer list explicit descending sorting", new string[] {
-                "sortDescendign"}, SourceLine=17)]
+                "sortDescending"}, SourceLine=17)]
         public virtual void GnomeSorterIntegerListExplicitDescendingSorting()
         {
             string[] tagsOfScenario = new string[] {
-                    "sortDescendign"};
+                    "sortDescending"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GnomeSorter integer list explicit descending sorting", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 18

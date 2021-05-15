@@ -159,11 +159,11 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [TechTalk.SpecRun.ScenarioAttribute("CycleSorter integer list explicit descending sorting", new string[] {
-                "sortDescendign"}, SourceLine=18)]
+                "sortDescending"}, SourceLine=18)]
         public virtual void CycleSorterIntegerListExplicitDescendingSorting()
         {
             string[] tagsOfScenario = new string[] {
-                    "sortDescendign"};
+                    "sortDescending"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CycleSorter integer list explicit descending sorting", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 19
