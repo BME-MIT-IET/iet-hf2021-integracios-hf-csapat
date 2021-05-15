@@ -13,13 +13,16 @@ The error list is visible on the image below:
 
 ![](image/Sonar5.PNG)
 
-
 ![](image/Sonar6.PNG)
 
+The TValue and TKey parameters have the same name as the type parameter from the outer type. To fix this we 
+renamed the parameters to make the code more readable.
+- CuckooHashTable.cs 
+- OpenAddressingHashTable.cs 
+- OpenScatterHashTable.cs 
 
 
 ## Errors addressing unused variables 
-
 
 
 ![](image/Sonar2.PNG)
@@ -27,6 +30,8 @@ The error list is visible on the image below:
 
 ![](image/Sonar11.PNG)
 
+-The variable was not used, so we removed it and inserted a discard instead.
+- CuckooHashTable.cs 
 
 
 ## Errors addressing not specified exception and unecessary code complications
@@ -44,6 +49,13 @@ The error list is visible on the image below:
 
 ![](image/Sonar10.PNG)
 
+The thrown exceptions were not specific enough so we changed the type of the exception and gave it an explanation text. In 
+the if expression there is no need to use bool Value == true.
+- CuckooHashTable.cs 
+- OpenAddressingHashTable.cs 
+- UndirectedWeightedDenseGraph.cs 
+- PrimeHashingFamily.cs 
+
 
 
 ## Wrong function naming and unecessary code complications
@@ -53,4 +65,11 @@ The error list is visible on the image below:
 
 ![](image/Sonar9.PNG)
 
+
+The naming of the function did not follow the functionality.
+The IncomingEdges hides inherited member. To not let the current member override 
+that implementation, we had to add new keyword.
+- DirectedWeightedDenseGraph.cs 
+- UndirectedWeightedDenseGraph.cs 
+- GraphsDirectedWeightedDenseGraphTest.cs 
 
