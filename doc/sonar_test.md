@@ -30,7 +30,7 @@ renamed the parameters to make the code more readable.
 
 ![](image/Sonar11.PNG)
 
--The variable was not used, so we removed it and inserted a discard instead.
+The variable was not used, so we removed it and inserted a discard instead.
 - CuckooHashTable.cs 
 
 
