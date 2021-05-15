@@ -5,8 +5,8 @@
 @addVertices
 Scenario: Add vertices to the graph as a list
 	Given the graph is empty
-	When these vertices are added |ab, bc, cd, de, ef|
-	Then the graph's vertices should be |ab, bc, cd, de, ef|
+	When these vertices are added ab,bc,cd,de,ef
+	Then the graph's vertices should be ab,bc,cd,de,ef
 
 @addVertices
 Scenario: Add vertices to the graph one-by-one
@@ -16,4 +16,4 @@ Scenario: Add vertices to the graph one-by-one
 	And this vertex is added cd
 	And this vertex is added de
 	And this vertex is added ef
-	Then the graph's vertices should be |ab, bc, cd, de, ef|
+	Then the graph's vertices should be ab,bc,cd,de,ef

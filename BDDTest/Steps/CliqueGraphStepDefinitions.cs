@@ -30,21 +30,21 @@ namespace BDDTest.Steps
 		}
 
 		[When("these vertices are added (.*)")]
-		public void WhenTheseVerticesAreAdded(List<string> vertices)
+		public void WhenTheseVerticesAreAdded(string vertices)
 		{
-			_cliqueGraph.AddVertices(vertices);
+			_cliqueGraph.AddVertices(vertices.Split(","));
 		}
 
 		[When("this vertex is added (.*)")]
-		public void WhenTheseVerticesAreAdded(string vertex)
+		public void WhenThisVertexIsAreAdded(string vertex)
 		{
 			_cliqueGraph.AddVertex(vertex);
 		}
 
 		[Then("the graph's vertices should be (.*)")]
-		public void ThenTheGraphsVerticesShouldBe(List<string> expectedVertices)
+		public void ThenTheGraphsVerticesShouldBe(string expectedVertices)
 		{
-			_cliqueGraph.Vertices.Should().BeEquivalentTo(expectedVertices);
+			_cliqueGraph.Vertices.Should().BeEquivalentTo(expectedVertices.Split(","));
 		}
 	}
 }
