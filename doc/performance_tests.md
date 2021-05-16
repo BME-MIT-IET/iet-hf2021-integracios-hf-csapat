@@ -6,9 +6,10 @@ There are serveral sorting algorithms implemented in the project. The performanc
 
 The execution times:
 
-- Heap sort: 3.67s
-- Merge sort: 1.78s
-- Quick sort: 1.50s
-- List.Sort(): 0.21s
+| Heap sort   | 3.67s |
+|-------------|-------|
+| Merge sort  | 1.78s |
+| Quick sort  | 1.50s |
+| List.Sort() | 0.21s |
 
 As it could be expected, none of them outperformed the .NET Framework's implementation, they are not even close. Comparing the three algorithms they are performing as usual: qucick sort is the fastest, and heap sort is the slowest.
