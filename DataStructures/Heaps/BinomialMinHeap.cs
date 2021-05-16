@@ -118,9 +118,8 @@ namespace DataStructures.Heaps
 
         private void CheckCapacity(int capacity)
         {
-            string message = $"Capacity is negative: {capacity}";
             if (capacity <= 0)
-                throw new ArgumentOutOfRangeException(message);
+                throw new ArgumentOutOfRangeException($"Capacity is negative: {capacity}");
         }
 
         /// <summary>
