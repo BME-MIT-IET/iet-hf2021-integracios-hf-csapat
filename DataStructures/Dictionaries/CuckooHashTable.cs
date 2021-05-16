@@ -163,7 +163,7 @@ namespace DataStructures.Dictionaries
         private bool _isActive(int index)
         {
             if (index < 0 || index > _collection.Length)
-                throw new ArgumentException($"Invalid argument");
+                throw new IndexOutOfRangeException($"Invalid index value was given");
 
             return (_collection[index] != null && _collection[index].IsActive);
         }
