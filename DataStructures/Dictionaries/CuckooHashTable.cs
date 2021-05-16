@@ -46,7 +46,7 @@ namespace DataStructures.Dictionaries
         private const double MAX_LOAD_FACTOR = 0.45;
         private const int ALLOWED_REHASHES = 5;
         private const int NUMBER_OF_HASH_FUNCTIONS = 7; // number of hash functions to use, selected 7 because it's prime. The choice was arbitrary.
-        internal readonly PrimesList PRIMES = PrimesList.Instance;
+       
 
         // Random number generator
         private Random _randomizer;
@@ -113,8 +113,7 @@ namespace DataStructures.Dictionaries
         /// New hash table size, but the hash functions stay the same.
         /// </summary>
         private void _rehash(int newCapacity)
-        {
-            _ = PRIMES.GetNextPrime(newCapacity);
+        {          
 
             var oldSize = _size;
             var oldCollection = this._collection;
