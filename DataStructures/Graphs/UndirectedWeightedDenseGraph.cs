@@ -112,7 +112,7 @@ namespace DataStructures.Graphs
         public new virtual IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex)
         {
             if (!HasVertex(vertex))
-                throw new ArgumentOutOfRangeException($"One of vertex is not part of the graph.");
+                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
 
             int source = _vertices.IndexOf(vertex);
             for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
