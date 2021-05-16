@@ -1,6 +1,12 @@
 # Documentation of BDD tests
 
-The main goal was to improve the coverage of classes which had few to no test beforehand.
+The main goal was to improve the coverage of classes which had few to no test beforehand. The Fine Code Coverage plugin was used to determine the initial and the improved coverage and to find classes lacking tests.
+
+The coverage before our tests was __59.9%__.  
+After the new Unit tests it went up to __73.9%__.  
+Then after adding the BDD tests up to __81.4%__.
+
+The ratio of covered lines to uncovered shifted from __1160 / 775__ to __1576 / 359__.
 
 The following classes were BDD tested with 43 individual test scenarios altogether:
 
