@@ -16,12 +16,84 @@ There are 3 shortest paths algorithms implemented in the project:
 
 Although all of them have the same interface (HasPathTo, DistanceTo, ShortestPathTo), only Dijkstra had a comprehensive test coverage. The task was to refactor `UnitTest/AlgorithmsTests/GraphsDijkstraShortestPathsTest.cs` tests to be executed on all three algorithms.
 
-First, all the algorithm classes made to implement a new interface called `IShortestPath`. Then each test method got parameterized to execute the same test on the three different implementations. Some tests are only executed on one or two of these implementations as not all of them support the same kind of graphs (Dijkstra does not support negative edges, BreadthFirst does not support weights). After executing the tests, several got failed: they were expecting `ArgumentException` but got `Exception`. After replacing all `Exception`s with `ArgumentException` (which made actually sense) two tests were still failing. They were two little bugs:
+First, all the algorithm classes made to implement a new interface called `IShortestPath`:
+
+```Csharp
+public interface IShortestPath<TVertex>
+{
+    /// <summary>
+    ///     Determines whether there is a path from the source vertex to this specified vertex.
+    /// </summary>
+    bool HasPathTo(TVertex destination);
+
+    /// <summary>
+    ///     Returns the distance between the source vertex and the specified vertex.
+    /// </summary>
+    long DistanceTo(TVertex destination);
+
+    /// <summary>
+    ///     Returns an enumerable collection of nodes that specify the shortest path from the source vertex to the destination vertex.
+    /// </summary>
+    IEnumerable<TVertex> ShortestPathTo(TVertex destination);
+}
+```
+
+Then each test method got parameterized to execute the same test on the three different implementations:
+
+```Csharp
+[Theory]
+[InlineData(ShortestPathAlgorithm.DIJKSTRA)]
+[InlineData(ShortestPathAlgorithm.BELLMAN_FORD)]
+[InlineData(ShortestPathAlgorithm.BREADTH_FIRST)]
+public void Constructor_Throw_WhenSourceIsNotPartOfGraph(ShortestPathAlgorithm alg)
+{
+    var graph = new DirectedWeightedSparseGraph<string>();
+    graph.AddVertex("a");
+    graph.AddVertex("b");
+    graph.AddVertex("c");
+    graph.AddVertex("d");
+    Assert.Throws<ArgumentException>(() => CreateAlgorithm(alg, graph, "x"));
+}
+```
+
+Some tests are only executed on one or two of these implementations as not all of them support the same kind of graphs (Dijkstra does not support negative edges, BreadthFirst does not support weights). After executing the tests, several got failed: they were expecting `ArgumentException` but got `Exception`. After replacing all `Exception`s with `ArgumentException` (which made actually sense) two tests were still failing. They were two little bugs:
 
 - BellmanFordShortestPaths initalized its `_edgeTo` array with wrong size, causing an `IndexOutOfRangeException`
 - In _checkOptimalityConditions checking whether each edge is relaxed did not handle Infinity if a vertex had infinity distance
 
- After fixing these bugs, all tests executed successfully.
+ After fixing these bugs, all tests executed successfully:
+
+```diff
+diff --git a/Algorithms/Graphs/BellmanFordShortestPaths.cs b/Algorithms/Graphs/BellmanFordShortestPaths.cs
+index b921e7f..82c2bfc 100644
+--- a/Algorithms/Graphs/BellmanFordShortestPaths.cs
++++ b/Algorithms/Graphs/BellmanFordShortestPaths.cs
+@@ -127,7 +127,7 @@ namespace Algorithms.Graphs
+
+             _distances = new Int64[_verticesCount];
+             _predecessors = new int[_verticesCount];
+-            _edgeTo = new WeightedEdge<TVertex>[_edgesCount];
++            _edgeTo = new WeightedEdge<TVertex>[_verticesCount];
+
+             _nodesToIndices = new Dictionary<TVertex, int>();
+             _indicesToNodes = new Dictionary<int, TVertex>();
+```
+
+```diff
+diff --git a/Algorithms/Graphs/BellmanFordShortestPaths.cs b/Algorithms/Graphs/BellmanFordShortestPaths.cs
+index 82c2bfc..a9fa169 100644
+--- a/Algorithms/Graphs/BellmanFordShortestPaths.cs
++++ b/Algorithms/Graphs/BellmanFordShortestPaths.cs
+@@ -187,7 +187,7 @@ namespace Algorithms.Graphs
+                 {
+                     int w = _nodesToIndices[edge.Key];
+
+-                    if (_distances[v] + edge.Value < _distances[w])
++                    if (_distances[v] != Infinity && _distances[v] + edge.Value < _distances[w])
+                     {
+                         Console.WriteLine("edge " + vertex + "-" + edge.Key + " is not relaxed");
+                         return false;
+```
 
 As a result the code was improved in several ways:
 - More unit test coverage
