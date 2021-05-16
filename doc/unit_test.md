@@ -151,3 +151,14 @@ We were testing if all the 5 implemented hashing algorithms gives the same deter
 We were testing if hashing algorithm throws an expected exception if we are hashing on null.
 
 
+## SelectionSorter
+
+This an other sorting algorithm which had 0% code coverage. It is a really small class so i thought it would be a good idea and also quite easy to achieve 100% code coverage
+But instead of using somekind of built in primitive type like int or string for testing if the sorting is good, I created my own class type.
+![](image/PersonClass.PNG)
+Because the algorithm I was about to test accept Generics types I tested it with my own type.
+In order to this work I had to implement the ICompare interface in a different class for the Person class
+![](image/PersonComparerClass.PNG)
+
+I  tested both the Ascending and Descending functions of the sorter and both just worked fine with my own complex type.
+
