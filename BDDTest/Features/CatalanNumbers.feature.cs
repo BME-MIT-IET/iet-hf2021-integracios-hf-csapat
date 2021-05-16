@@ -70,13 +70,19 @@ namespace BDDTest.Features
             testRunner.CollectScenarioErrors();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Get range of Catalan numbers", new string[] {
-                "getRange"}, SourceLine=4)]
-        public virtual void GetRangeOfCatalanNumbers()
+        public virtual void GetRangeOfCatalanNumbers(string from, string to, string range, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
+            string[] @__tags = new string[] {
                     "getRange"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("from", from);
+            argumentsOfScenario.Add("to", to);
+            argumentsOfScenario.Add("range", range);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get range of Catalan numbers", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
@@ -99,24 +105,60 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 6
- testRunner.When("I get a range of catalan numbers from 0 to 25", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When(string.Format("I get a range of catalan numbers from {0} to {1}", from, to), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
- testRunner.Then("the range should be correct", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then(string.Format("the range should be {0}", range), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
+        [TechTalk.SpecRun.ScenarioAttribute("Get range of Catalan numbers, 0", new string[] {
+                "getRange"}, SourceLine=10)]
+        public virtual void GetRangeOfCatalanNumbers_0()
+        {
+#line 5
+this.GetRangeOfCatalanNumbers("0", "5", "1,1,2,5,14,42", ((string[])(null)));
+#line hidden
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Get range of Catalan numbers, 6", new string[] {
+                "getRange"}, SourceLine=10)]
+        public virtual void GetRangeOfCatalanNumbers_6()
+        {
+#line 5
+this.GetRangeOfCatalanNumbers("6", "10", "132,429,1430,4862,16796", ((string[])(null)));
+#line hidden
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Get range of Catalan numbers, 11", new string[] {
+                "getRange"}, SourceLine=10)]
+        public virtual void GetRangeOfCatalanNumbers_11()
+        {
+#line 5
+this.GetRangeOfCatalanNumbers("11", "15", "58786,208012,742900,2674440,9694845", ((string[])(null)));
+#line hidden
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Get range of Catalan numbers, 22", new string[] {
+                "getRange"}, SourceLine=10)]
+        public virtual void GetRangeOfCatalanNumbers_22()
+        {
+#line 5
+this.GetRangeOfCatalanNumbers("22", "24", "91482563640,343059613650,1289904147324", ((string[])(null)));
+#line hidden
+        }
+        
         [TechTalk.SpecRun.ScenarioAttribute("Get wrong range of Catalan numbers", new string[] {
-                "getRange"}, SourceLine=9)]
+                "getRange"}, SourceLine=16)]
         public virtual void GetWrongRangeOfCatalanNumbers()
         {
             string[] tagsOfScenario = new string[] {
                     "getRange"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get wrong range of Catalan numbers", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 10
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -136,25 +178,30 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 11
+#line 18
  testRunner.When("I get a range of catalan numbers from 10 to 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
- testRunner.Then("the range should be null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 19
+ testRunner.Then("the range should contain null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [TechTalk.SpecRun.ScenarioAttribute("Get Catalan number using the Binomial Coefficients", new string[] {
-                "getNumber"}, SourceLine=14)]
-        public virtual void GetCatalanNumberUsingTheBinomialCoefficients()
+        public virtual void GetCatalanNumberUsingTheBinomialCoefficients(string index, string catalanNumber, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
+            string[] @__tags = new string[] {
                     "getNumber"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("index", index);
+            argumentsOfScenario.Add("catalanNumber", catalanNumber);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get Catalan number using the Binomial Coefficients", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 15
+#line 22
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -174,14 +221,41 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 16
- testRunner.When("I get the 12. catalan number using binom coefficients", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 23
+ testRunner.When(string.Format("I get the {0}. catalan number using binom coefficients", index), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 17
- testRunner.Then("the number should be correct", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 24
+ testRunner.Then(string.Format("the number should be {0}", catalanNumber), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Get Catalan number using the Binomial Coefficients, 5", new string[] {
+                "getNumber"}, SourceLine=27)]
+        public virtual void GetCatalanNumberUsingTheBinomialCoefficients_5()
+        {
+#line 22
+this.GetCatalanNumberUsingTheBinomialCoefficients("5", "42", ((string[])(null)));
+#line hidden
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Get Catalan number using the Binomial Coefficients, 10", new string[] {
+                "getNumber"}, SourceLine=27)]
+        public virtual void GetCatalanNumberUsingTheBinomialCoefficients_10()
+        {
+#line 22
+this.GetCatalanNumberUsingTheBinomialCoefficients("10", "16796", ((string[])(null)));
+#line hidden
+        }
+        
+        [TechTalk.SpecRun.ScenarioAttribute("Get Catalan number using the Binomial Coefficients, 15", new string[] {
+                "getNumber"}, SourceLine=27)]
+        public virtual void GetCatalanNumberUsingTheBinomialCoefficients_15()
+        {
+#line 22
+this.GetCatalanNumberUsingTheBinomialCoefficients("15", "9694845", ((string[])(null)));
+#line hidden
         }
     }
 }

@@ -55,24 +55,33 @@ namespace BDDTest.Steps
 				_scenarioContext.Pending();
 		}
 
-		[Then("the range should be correct")]
-		public void ThenTheRangeShouldBeCorrect()
+		[Then("the range should be (.*)")]
+		public void ThenTheRangeShouldBe(string range)
 		{
+			List<BigInteger> expectedRange = new List<BigInteger>();
+
+			var numberStrings = range.Split(",");
+			foreach (string number in numberStrings)
+			{
+				long parsedNumber = long.Parse(number);
+				expectedRange.Add(new BigInteger(parsedNumber));
+			}
+
 			_range.Should().BeEquivalentTo(
-				_firstFewCatalanNumbers.GetRange(_from, _to - _from + 1)
+				expectedRange
 			);
 		}
 
-		[Then("the range should be null")]
-		public void ThenTheRangeShouldBeNull()
+		[Then("the range should contain null")]
+		public void ThenTheRangeShouldContainNull()
 		{
 			_range.Should().BeNull();
 		}
 
-		[Then("the number should be correct")]
-		public void ThenTheNumberShouldBeCorrect()
+		[Then("the number should be (.*)")]
+		public void ThenTheNumberShouldBeCorrect(int number)
 		{
-			_catalanNumber.Should().BeEquivalentTo(_firstFewCatalanNumbers[_rank]);
+			_catalanNumber.Should().BeEquivalentTo(new BigInteger(number));
 		}
 	}
 }
