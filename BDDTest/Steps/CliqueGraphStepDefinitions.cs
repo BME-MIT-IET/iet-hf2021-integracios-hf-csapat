@@ -66,7 +66,7 @@ namespace BDDTest.Steps
 			_cliqueGraph.Vertices.Should().BeEquivalentTo(expectedVertices.Split(","));
 		}
 
-		[Then("getting the graph's vertices should give null")]
+		[Then("getting the graph's vertices should return null")]
 		public void ThenTheGraphsVerticesShouldBeNull()
 		{
 			_cliqueGraph.Vertices.Should().BeEmpty();

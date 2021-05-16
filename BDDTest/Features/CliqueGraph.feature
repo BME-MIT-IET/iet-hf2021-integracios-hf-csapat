@@ -26,7 +26,7 @@ Scenario: Instantiate with vertices
 @instantiate
 Scenario: Instantiate with null
 	When a graph is instantiated with null
-	Then getting the graph's vertices should give null
+	Then getting the graph's vertices should return null
 
 @isComplete
 Scenario: Check if vertices are complete

@@ -236,7 +236,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("a graph is instantiated with null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 29
- testRunner.Then("getting the graph\'s vertices should give null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("getting the graph\'s vertices should return null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

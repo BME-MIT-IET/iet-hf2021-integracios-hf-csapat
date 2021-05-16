@@ -67,9 +67,7 @@ namespace BDDTest.Steps
 				expectedRange.Add(new BigInteger(parsedNumber));
 			}
 
-			_range.Should().BeEquivalentTo(
-				expectedRange
-			);
+			_range.Should().BeEquivalentTo(expectedRange);
 		}
 
 		[Then("the range should contain null")]
