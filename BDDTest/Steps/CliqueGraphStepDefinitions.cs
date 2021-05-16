@@ -16,7 +16,7 @@ namespace BDDTest.Steps
 
 		private readonly ScenarioContext _scenarioContext;
 		private CliqueGraph<string> _cliqueGraph;
-		private List<string> _vertices = new List<string>();
+		private string[] _vertices;
 
 		public CliqueGraphStepDefinitions(ScenarioContext scenarioContext)
 		{
@@ -27,6 +27,25 @@ namespace BDDTest.Steps
 		public void GivenTheGraphIsEmpty()
 		{
 			_cliqueGraph = new CliqueGraph<string>();
+		}
+
+		[Given("the vertices are (.*)")]
+		public void GivenTheVerticesAre(string vertices)
+		{
+			_vertices = vertices.Split(",");
+		}
+
+		[When("a graph is instantiated with vertices: (.*)")]
+		public void WhenGraphIsInstantiatedWithVertices(string vertices)
+		{
+			_cliqueGraph = new CliqueGraph<string>(vertices.Split(","));
+		}
+
+		[When("a graph is instantiated with null")]
+		public void WhenGraphIsInstantiatedWithNull()
+		{
+			List<string> nullList = null;
+			_cliqueGraph = new CliqueGraph<string>(nullList);
 		}
 
 		[When("these vertices are added (.*)")]
@@ -46,5 +65,18 @@ namespace BDDTest.Steps
 		{
 			_cliqueGraph.Vertices.Should().BeEquivalentTo(expectedVertices.Split(","));
 		}
+
+		[Then("getting the graph's vertices should give null")]
+		public void ThenTheGraphsVerticesShouldBeNull()
+		{
+			_cliqueGraph.Vertices.Should().BeEmpty();
+		}
+
+		[Then("isComplete should be (.*)")]
+		public void ThenIsCompleteShouldBe(bool isComplete)
+		{
+			_cliqueGraph.isComplete(_vertices).Should().Be(isComplete);
+		}
+
 	}
 }
