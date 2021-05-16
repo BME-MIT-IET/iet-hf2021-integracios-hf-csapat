@@ -80,14 +80,11 @@ namespace DataStructures.Graphs
         /// <summary>
         /// An enumerable collection of all weighted directed edges in graph.
         /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> Edges
+        public virtual IEnumerable<WeightedEdge<T>> GetEdges()
         {
-            get
-            {
-                foreach (var vertex in _vertices)
-                    foreach (var outgoingEdge in OutgoingEdges((T)vertex))
-                        yield return outgoingEdge;
-            }
+            foreach (var vertex in _vertices)
+                foreach (var outgoingEdge in OutgoingEdges((T)vertex))
+                    yield return outgoingEdge;
         }
 
         /// <summary>
@@ -279,9 +276,9 @@ namespace DataStructures.Graphs
 
             // Check the existence of vertices and the directed edge
             if (srcIndex == -1 || dstIndex == -1)
-                throw new Exception("One of the vertices or both of them doesn't exist.");
+                throw new ArgumentException("One of the vertices or both of them doesn't exist.");
             if (!_doesEdgeExist(srcIndex, dstIndex))
-                throw new Exception("Edge doesn't exist.");
+                throw new ArgumentException("Edge doesn't exist.");
 
             return (new WeightedEdge<T>(source, destination, _getEdgeWeight(srcIndex, dstIndex)));
         }

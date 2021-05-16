@@ -22,15 +22,15 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// THE CUCKOO HASH TABLE ENTERY
         /// </summary>
-        private class CHashEntry<TKey, TValue> where TKey : IComparable<TKey>
+        private class CHashEntry<TKeyinternal, TValueinternal> where TKeyinternal : IComparable<TKey>
         {
-            public TKey Key { get; set; }
-            public TValue Value { get; set; }
+            public TKeyinternal Key { get; set; }
+            public TValueinternal Value { get; set; }
             public bool IsActive { get; set; }
 
-            public CHashEntry() : this(default(TKey), default(TValue), false) { }
+            public CHashEntry() : this(default(TKeyinternal), default(TValueinternal), false) { }
 
-            public CHashEntry(TKey key, TValue value, bool isActive)
+            public CHashEntry(TKeyinternal key, TValueinternal value, bool isActive)
             {
                 Key = key;
                 Value = value;
@@ -46,7 +46,7 @@ namespace DataStructures.Dictionaries
         private const double MAX_LOAD_FACTOR = 0.45;
         private const int ALLOWED_REHASHES = 5;
         private const int NUMBER_OF_HASH_FUNCTIONS = 7; // number of hash functions to use, selected 7 because it's prime. The choice was arbitrary.
-        internal readonly PrimesList PRIMES = PrimesList.Instance;
+       
 
         // Random number generator
         private Random _randomizer;
@@ -113,8 +113,7 @@ namespace DataStructures.Dictionaries
         /// New hash table size, but the hash functions stay the same.
         /// </summary>
         private void _rehash(int newCapacity)
-        {
-            int primeCapacity = PRIMES.GetNextPrime(newCapacity);
+        {          
 
             var oldSize = _size;
             var oldCollection = this._collection;
@@ -128,7 +127,7 @@ namespace DataStructures.Dictionaries
 
                 for (int i = 0; i < oldCollection.Length; ++i)
                 {
-                    if (oldCollection[i] != null && oldCollection[i].IsActive == true)
+                    if (oldCollection[i] != null && oldCollection[i].IsActive)
                     {
                         _insertHelper(oldCollection[i].Key, oldCollection[i].Value);
                     }
@@ -164,9 +163,9 @@ namespace DataStructures.Dictionaries
         private bool _isActive(int index)
         {
             if (index < 0 || index > _collection.Length)
-                throw new IndexOutOfRangeException();
+                throw new IndexOutOfRangeException($"Invalid index value was given");
 
-            return (_collection[index] != null && _collection[index].IsActive == true);
+            return (_collection[index] != null && _collection[index].IsActive);
         }
 
         /// <summary>
@@ -283,7 +282,7 @@ namespace DataStructures.Dictionaries
             }
             set
             {
-                if (ContainsKey(key) == true)
+                if (ContainsKey(key))
                     Update(key, value);
 
                 throw new KeyNotFoundException();
@@ -306,7 +305,7 @@ namespace DataStructures.Dictionaries
         public void Add(TKey key, TValue value)
         {
             if (ContainsKey(key))
-                throw new Exception("Key already exists in the hash table.");
+                throw new ArgumentException($"Key already exists in the hash table.");
 
             if (_size >= _collection.Length * MAX_LOAD_FACTOR)
                 _expandCapacity(_collection.Length + 1);
@@ -356,7 +355,7 @@ namespace DataStructures.Dictionaries
             Parallel.ForEach(_collection,
                 (item) =>
                 {
-                    if (item != null && item.IsActive == true)
+                    if (item != null && item.IsActive)
                     {
                         item.IsActive = false;
                     }

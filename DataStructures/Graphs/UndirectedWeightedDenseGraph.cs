@@ -109,7 +109,7 @@ namespace DataStructures.Graphs
         /// <summary>
         ///     Get all incoming edges to a vertex
         /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex)
+        public new virtual IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex)
         {
             if (!HasVertex(vertex))
                 throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
@@ -131,10 +131,10 @@ namespace DataStructures.Graphs
         /// <summary>
         ///     Get all outgoing weighted edges from vertex
         /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
+        public new virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
         {
             if (!HasVertex(vertex))
-                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
+                throw new ArgumentOutOfRangeException($"One of vertex is not part of the graph.");
 
             int source = _vertices.IndexOf(vertex);
             for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
@@ -187,7 +187,7 @@ namespace DataStructures.Graphs
             int dstIndex = _vertices.IndexOf(destination);
 
             if (srcIndex == -1 || dstIndex == -1)
-                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
+                throw new ArgumentOutOfRangeException($"One of vertex is not part of the graph.");
             if (!_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
@@ -207,7 +207,7 @@ namespace DataStructures.Graphs
             int dstIndex = _vertices.IndexOf(destination);
 
             if (srcIndex == -1 || dstIndex == -1)
-                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
+                throw new ArgumentOutOfRangeException($"One of vertex is not part of the graph.");
             if (!_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
@@ -267,7 +267,7 @@ namespace DataStructures.Graphs
             int dstIndex = _vertices.IndexOf(destination);
 
             if (srcIndex == -1 || dstIndex == -1)
-                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
+                throw new ArgumentOutOfRangeException($"One of vertex is not part of the graph.");
 
             if (!_doesEdgeExist(srcIndex, dstIndex))
                 return null;
