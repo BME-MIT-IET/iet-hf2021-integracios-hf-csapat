@@ -7,22 +7,22 @@ namespace DataStructures.Dictionaries
     /// <summary>
     /// Open Addressing Data Structure
     /// </summary>
-    /// <typeparam name="TKeyinternal"></typeparam>
-    /// <typeparam name="TValueinternal"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
     public class OpenAddressingHashTable<TKey, TValue> : IDictionary<TKey, TValue> where TKey : IComparable<TKey>
     {
 
         /// <summary>
         /// Open Addressing Entry
         /// </summary>
-        /// <typeparam name="TKeyinternal"></typeparam>
-        /// <typeparam name="TValueinteral"></typeparam>
-        private class OAHashEntry<TKeyinternal, TValueinternal> where TKeyinternal : IComparable<TKey>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        private class OAHashEntry<TKey, TValue> where TKey : IComparable<TKey>
         {
-            public TKeyinternal key { get; set; }
-            public TValueinternal value { get; set; }
+            public TKey key { get; set; }
+            public TValue value { get; set; }
             public bool occupied { get; set; }
-            public OAHashEntry(TKeyinternal Key, TValueinternal Value, bool occp)
+            public OAHashEntry(TKey Key, TValue Value, bool occp)
             {
                 key = Key;
                 value = Value;
@@ -181,7 +181,7 @@ namespace DataStructures.Dictionaries
                 int index = _double_hash(key, i);
 
 
-                if (_table[index].occupied)
+                if (_table[index].occupied == false)
                 {
                     var newEntry = new OAHashEntry<TKey, TValue>(key, value, true);
                     _keys.Add(key);
@@ -226,7 +226,7 @@ namespace DataStructures.Dictionaries
             }
             set {
 
-                if (ContainsKey(key))
+                if (ContainsKey(key) == true)
                 {
 
                     int index = search(key);
